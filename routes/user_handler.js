@@ -17,6 +17,13 @@ const Follower = mongoose.model('Follower', followerSchema);
 **/
 router.post('/', async (req, res) => {
 
+  if (req.body.password.length < 6) {
+    return res.json({
+      status: false,
+      message: 'Password should be 6 character!'
+    });
+  }
+
   try {
     const hashPassword = await bcrypt.hash(req.body.password, 10);
     const newDocument = new User({ ...req.body, password: hashPassword });
@@ -24,7 +31,7 @@ router.post('/', async (req, res) => {
       if (err) {
         res.json({
           status: false,
-          message: 'User already exist. please login!'
+          message: err?.code === 11000 ? "User already exist. Please check username or email!" : err
         });
       }
       else {
