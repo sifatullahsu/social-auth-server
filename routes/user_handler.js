@@ -263,10 +263,11 @@ router.delete('/:username/follow', async (req, res) => {
 router.get('/all/list', async (req, res) => {
 
   try {
-    const users = await User.find({}).select({ __v: 0, password: 0 });
+    const select = { __v: 0, password: 0 };
+    const users = await User.find({}).select(select);
     const followers = await Follower.find({})
-      .populate({ path: 'author', select: { __v: 0, password: 0 } })
-      .populate({ path: 'following', select: { __v: 0 } })
+      .populate({ path: 'author', select: select })
+      .populate({ path: 'following', select: select })
       .select({ __v: 0 });
 
     res.json({
