@@ -1,9 +1,9 @@
 ### 🔗 Social Auth Server
 
-#### Create A New User
+#### POST: Create A New User
 
 ```http
-  POST https://social-auth.vercel.app/api/v1/users
+  https://social-auth.vercel.app/api/v1/users
 ```
 
 | Body      | Type     | Description                |
